@@ -11,11 +11,11 @@ create table usuario (
 create table ocorrencia (
     id int not null auto_increment primary key,
     usuarioId int not null,
-    local varchar(100) not null,
+    lugar varchar(100) not null,
     tipoResiduo varchar(50) not null,
     nivelRisco enum('Baixo', 'Medio', 'Alto') default('Medio') not null,
-    data Date default(curdate()) not null,
-    status enum('Novo', 'Tratado', 'Pendente') default('Novo') not null
+    tempo Date default(curdate()) not null,
+    estado enum('Novo', 'Tratado', 'Pendente') default('Novo') not null
 );
 alter table ocorrencia add constraint fk_registra
 foreign key (usuarioId) references usuario(id);
@@ -25,7 +25,7 @@ insert into usuario (nome, email, senha) values
 ('João Silva', 'joao.silva@email.com', password('senha123')),
 ('Ana Souza', 'ana.souza@email.com', password('senha123'));
 
-insert into ocorrencia(usuarioId, local, tipoResiduo, nivelRisco, status) values
+insert into ocorrencia(usuarioId, lugar, tipoResiduo, nivelRisco, estado) values
 (1, 'Avenida Osmar Contato, 120', 'Eletrônico', 'Alto', 'Novo'),
 (2, 'Rua Osmar Motta, 1313', 'Veículo usado', 'Baixo', 'Pendente'),
 (1, 'Rua Lucas trado, 15', 'Eletônico', 'Alto', 'Tratado'),
