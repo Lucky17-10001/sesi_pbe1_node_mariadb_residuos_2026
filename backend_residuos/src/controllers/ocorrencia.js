@@ -11,7 +11,7 @@ const cadastrar = (req, res) => {
             } else {
                 const novaocorrencia = req.body
                 novaocorrencia.id = results.insertId
-                res.status(201).json({ message: 'Ocorrência cadastrado com sucesso', event: novaocorrencia })
+                res.status(201).json({ message: 'Ocorrência cadastrada com sucesso', event: novaocorrencia })
             }
         })
     } catch (error) {
@@ -52,7 +52,7 @@ const alterar = (req, res) => {
             if (results.affectedRows == 1)
                 res.json("Registro alterado com sucesso")
             else
-                res.status(404).json({ msg: "Nada alerado no banco de dados", erro: results })
+                res.status(404).json({ msg: "Nada alterado no banco de dados", erro: results })
         }
     })
 }
@@ -73,10 +73,22 @@ const excluir = (req, res) => {
     })
 }
 
+const resumo = (req, res) => {
+    const sql = "SELECT COUNT(*) AS totalTratados FROM ocorrencia WHERE estado = 
+    con.query(sql, (err, results) => {
+        if (err) {
+            console.error(err)
+            res.status(500).json({ error: 'Erro ao gerar resumo de resíduos' })
+        } else {
+            res.json({ total_tratados: results[0].totalTratados })
+        }
+    })
+}
 
 module.exports = {
     cadastrar,
     listar,
     alterar,
-    excluir
+    excluir,
+    resumo
 }
