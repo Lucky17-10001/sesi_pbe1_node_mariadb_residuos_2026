@@ -75,16 +75,16 @@ const excluir = (req, res) => {
 
 const login = (req, res) => {
     const { email, senha } = req.body
-    const sql = 'SELECT id, nome, email FROM usuario WHERE email = ? AND senha = ?;'
+    const sql = 'SELECT id, nome, email FROM usuario WHERE email = ? AND senha = password(?);'
     con.query(sql, [email, senha], (err, results) => {
         if (err) {
             console.error(err)
             res.status(500).json({ error: 'Erro ao realizar login' })
         } else {
             if (results.length === 0) {
-                res.status(401).json("Acesso negado, credenciais inválidas")
+                res.status(404).json("Acesso negado, credenciais inválidas")
             } else {
-                res.json({ message: "Login realizado com sucesso", user: results[0] })
+                res.json(results)
             }
         }
     })
