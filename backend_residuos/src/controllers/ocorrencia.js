@@ -74,7 +74,7 @@ const excluir = (req, res) => {
 }
 
 const resumo = (req, res) => {
-    const sql = "SELECT COUNT(*) AS totalTratados FROM ocorrencia WHERE estado = 
+    const sql = 'SELECT COUNT(*) AS totalTratados FROM ocorrencia WHERE estado'
     con.query(sql, (err, results) => {
         if (err) {
             console.error(err)
