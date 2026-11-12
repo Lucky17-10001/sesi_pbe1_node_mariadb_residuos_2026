@@ -3,14 +3,17 @@ const con = require('../db')
 const cadastrar = (req, res) => {
     const { nome, email, senha } = req.body
     try {
-        const sql = 'INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?);'
+        const sql = 'INSERT INTO usuario (nome, email, senha) VALUES (?, ?, PASSWORD(?));'
         con.query(sql, [nome, email, senha], (err, results) => {
             if (err) {
                 console.error(err)
                 res.status(500).json({ error: 'Erro ao cadastrar usuário' })
             } else {
-                const novoUsuario = req.body
-                novoUsuario.id = results.insertId
+                const novoUsuario = {
+                    id: results.insertId,
+                    nome,
+                    email
+                }
                 res.status(201).json({ message: 'Usuário cadastrado com sucesso', user: novoUsuario })
             }
         })
@@ -38,7 +41,11 @@ const alterar = (req, res) => {
     let campos = ''
     const colunas = []
     chaves.forEach((chave) => {
-        campos += `${chave} = ?,`
+        if (chave === 'senha') {
+            campos += `${chave} = PASSWORD(?),`
+        } else {
+            campos += `${chave} = ?,`
+        }
         colunas.push(req.body[chave])
     })
     campos = campos.slice(0, -1)
@@ -90,10 +97,25 @@ const login = (req, res) => {
     })
 }
 
+const listarPorId = (req, res) => {
+    const sql = 'SELECT id, nome, email FROM usuario WHERE id = ?;'
+    con.query(sql, [req.params.id], (err, results) => {
+        if (err) {
+            console.error(err)
+            res.status(500).json({ error: 'Erro ao buscar usuário' })
+        } else if (results.length === 0) {
+            return res.status(404).json({ error: 'Usuário não encontrado' })
+        } else {
+            res.json(results)
+        }
+    })
+}
+
 module.exports = {
     cadastrar,
     listar,
     alterar,
     excluir,
-    login
+    login,
+    listarPorId
 }

@@ -28,7 +28,7 @@ insert into usuario (nome, email, senha) values
 insert into ocorrencia(usuarioId, lugar, tipoResiduo, nivelRisco, estado) values
 (1, 'Avenida Osmar Contato, 120', 'Eletrônico', 'Alto', 'Novo'),
 (2, 'Rua Osmar Motta, 1313', 'Veículo usado', 'Baixo', 'Pendente'),
-(1, 'Rua Lucas trado, 15', 'Eletônico', 'Alto', 'Tratado'),
+(1, 'Rua Lucas trado, 15', 'Eletrônico', 'Alto', 'Tratado'),
 (2, 'Rua Rolando da Rocha, S/N', 'Móvel usado', 'Medio', 'Novo'),
 (3, 'Rua Jacinto Melo, 101', 'Hospitalar', 'Alto', 'Novo');
 

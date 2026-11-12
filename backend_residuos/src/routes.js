@@ -14,11 +14,13 @@ router.post('/usuarios', Usuario.cadastrar)
 router.get('/usuarios', Usuario.listar)
 router.put('/usuarios/:id', Usuario.alterar)
 router.delete('/usuarios/:id', Usuario.excluir)
+router.get('/usuarios/:id', Usuario.listarPorId)
 
 router.post('/ocorrencias', Ocorrencia.cadastrar)
 router.get('/ocorrencias', Ocorrencia.listar)
 router.patch('/ocorrencias/:id', Ocorrencia.alterar)
 router.delete('/ocorrencias/:id', Ocorrencia.excluir)
 router.get('/ocorrencias/resumo', Ocorrencia.resumo)
+router.get('/ocorrencias/:id', Ocorrencia.listarPorId)
 
 module.exports = router

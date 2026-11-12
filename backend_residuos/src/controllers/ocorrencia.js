@@ -74,7 +74,7 @@ const excluir = (req, res) => {
 }
 
 const resumo = (req, res) => {
-    const sql = 'SELECT COUNT(*) AS totalTratados FROM ocorrencia WHERE estado'
+    const sql = 'SELECT COUNT(*) AS totalTratados FROM ocorrencia WHERE estado = "Tratado";'
     con.query(sql, (err, results) => {
         if (err) {
             console.error(err)
@@ -85,10 +85,26 @@ const resumo = (req, res) => {
     })
 }
 
+const listarPorId = (req, res) => {
+    const id = Number(req.params.id)
+    const sql = 'SELECT * FROM ocorrencia WHERE id = ?;'
+    con.query(sql, [id], (err, results) => {
+        if (err) {
+            console.error(err)
+            res.status(500).json({ error: 'Erro ao buscar ocorrência' })
+        } else if (results.length === 0) {
+            return res.status(404).json({ error: 'Ocorrência não encontrada' })
+        } else {
+            res.json(results)
+        }
+    })
+}
+
 module.exports = {
     cadastrar,
     listar,
     alterar,
     excluir,
-    resumo
+    resumo,
+    listarPorId
 }
